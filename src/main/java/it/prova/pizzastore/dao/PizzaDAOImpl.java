@@ -23,7 +23,8 @@ public class PizzaDAOImpl implements PizzaDAO {
 
 	@Override
 	public Optional<Pizza> findOne(Long id) throws Exception {
-		return null;
+		Pizza result = entityManager.find(Pizza.class, id);
+		return result != null ? Optional.of(result) : Optional.empty();
 	}
 
 	@Override

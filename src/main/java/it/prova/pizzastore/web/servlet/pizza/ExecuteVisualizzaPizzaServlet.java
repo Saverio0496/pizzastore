@@ -1,4 +1,4 @@
-package it.prova.pizzastore.web.servlet.cliente;
+package it.prova.pizzastore.web.servlet.pizza;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import it.prova.pizzastore.model.Cliente;
+import it.prova.pizzastore.model.Pizza;
 import it.prova.pizzastore.service.MyServiceFactory;
 
-@WebServlet("/ExecuteVisualizzaClienteServlet")
-public class ExecuteVisualizzaClienteServlet extends HttpServlet {
+@WebServlet("/ExecuteVisualizzaPizzaServlet")
+public class ExecuteVisualizzaPizzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String idClienteParam = request.getParameter("idCliente");
+		String idPizzaParam = request.getParameter("idPizza");
 
-		if (!NumberUtils.isCreatable(idClienteParam)) {
+		if (!NumberUtils.isCreatable(idPizzaParam)) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("home").forward(request, response);
@@ -28,17 +28,17 @@ public class ExecuteVisualizzaClienteServlet extends HttpServlet {
 		}
 
 		try {
-			Cliente clienteInstance = MyServiceFactory.getClienteServiceInstance()
-					.caricaSingoloElemento(Long.parseLong(idClienteParam));
+			Pizza pizzaInstance = MyServiceFactory.getPizzaServiceInstance()
+					.caricaSingoloElemento(Long.parseLong(idPizzaParam));
 
-			if (clienteInstance == null) {
+			if (pizzaInstance == null) {
 				request.setAttribute("errorMessage", "Elemento non trovato.");
-				request.getRequestDispatcher("ExecuteListClienteServlet?operationResult=NOT_FOUND").forward(request,
+				request.getRequestDispatcher("ExecuteListPizzaServlet?operationResult=NOT_FOUND").forward(request,
 						response);
 				return;
 			}
 
-			request.setAttribute("show_cliente_attr", clienteInstance);
+			request.setAttribute("show_pizza_attr", pizzaInstance);
 		} catch (Exception e) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			e.printStackTrace();
@@ -47,6 +47,7 @@ public class ExecuteVisualizzaClienteServlet extends HttpServlet {
 			return;
 		}
 
-		request.getRequestDispatcher("/cliente/show.jsp").forward(request, response);
+		request.getRequestDispatcher("/pizza/show.jsp").forward(request, response);
 	}
+
 }

@@ -36,7 +36,19 @@ public class PizzaServiceImpl implements PizzaService {
 
 	@Override
 	public Pizza caricaSingoloElemento(Long id) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			pizzaDAO.setEntityManager(entityManager);
+
+			return pizzaDAO.findOne(id).get();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
