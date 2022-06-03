@@ -24,7 +24,7 @@ public class HomeServlet extends HttpServlet {
 		} else if (utenteInstance.isPizzaiolo()) {
 			request.getRequestDispatcher("/utente/indexPizzaiolo.jsp").forward(request, response);
 		} else if (utenteInstance.isFattorino()) {
-			request.getRequestDispatcher("/utente/indexFattorino.jsp").forward(request, response);
+			request.getRequestDispatcher("ExecuteListOrdiniApertiServlet").forward(request, response);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class HomeServlet extends HttpServlet {
 		} else if (utenteInstance.isPizzaiolo()) {
 			request.getRequestDispatcher("/utente/indexPizzaiolo.jsp").forward(request, response);
 		} else if (utenteInstance.isFattorino()) {
-			request.getRequestDispatcher("/utente/indexFattorino.jsp").forward(request, response);
+			request.getRequestDispatcher("ExecuteListOrdiniApertiServlet").forward(request, response);
 		}
 
 	}
