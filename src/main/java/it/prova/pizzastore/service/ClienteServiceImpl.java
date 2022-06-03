@@ -121,6 +121,18 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public List<Cliente> findByExample(Cliente example) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			clienteDAO.setEntityManager(entityManager);
+
+			return clienteDAO.findByExample(example);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 }
