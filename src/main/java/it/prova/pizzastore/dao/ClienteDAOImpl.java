@@ -46,6 +46,10 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 	@Override
 	public void delete(Cliente clienteInput) throws Exception {
+		if (clienteInput == null) {
+			throw new Exception("Problema valore in input");
+		}
+		entityManager.remove(entityManager.merge(clienteInput));
 	}
 
 	@Override
