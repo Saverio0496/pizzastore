@@ -56,6 +56,11 @@ public class Pizza {
 		this.prezzoBase = prezzoBase;
 	}
 
+	public Pizza(String descrizione, String ingredienti) {
+		this.descrizione = descrizione;
+		this.ingredienti = ingredienti;
+	}
+
 	public Long getId() {
 		return id;
 	}

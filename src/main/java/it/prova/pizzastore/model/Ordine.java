@@ -93,6 +93,15 @@ public class Ordine {
 		this.costoTotaleOrdine = costoTotaleOrdine;
 	}
 
+	public Ordine(String codice, Integer costoTotaleOrdine) {
+		this.codice = codice;
+		this.costoTotaleOrdine = costoTotaleOrdine;
+	}
+
+	public Ordine(String codice) {
+		this.codice = codice;
+	}
+
 	public Long getId() {
 		return id;
 	}
