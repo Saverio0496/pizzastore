@@ -2,8 +2,11 @@ package it.prova.pizzastore.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import it.prova.pizzastore.dao.PizzaDAO;
 import it.prova.pizzastore.model.Pizza;
+import it.prova.pizzastore.web.listener.LocalEntityManagerFactoryListener;
 
 public class PizzaServiceImpl implements PizzaService {
 
@@ -16,7 +19,19 @@ public class PizzaServiceImpl implements PizzaService {
 
 	@Override
 	public List<Pizza> listAllElements() throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			pizzaDAO.setEntityManager(entityManager);
+
+			return pizzaDAO.list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override

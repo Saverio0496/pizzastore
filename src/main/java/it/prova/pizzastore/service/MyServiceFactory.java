@@ -58,7 +58,7 @@ public class MyServiceFactory {
 		return CLIENTE_SERVICE_INSTANCE;
 	}
 
-	public static PizzaService getFilmServiceInstance() {
+	public static PizzaService getPizzaServiceInstance() {
 		if (PIZZA_SERVICE_INSTANCE == null)
 			PIZZA_SERVICE_INSTANCE = new PizzaServiceImpl();
 
@@ -70,7 +70,7 @@ public class MyServiceFactory {
 		return PIZZA_SERVICE_INSTANCE;
 	}
 
-	public static OrdineService getRegistaServiceInstance() {
+	public static OrdineService getOrdineServiceInstance() {
 		if (ORDINE_SERVICE_INSTANCE == null)
 			ORDINE_SERVICE_INSTANCE = new OrdineServiceImpl();
 
