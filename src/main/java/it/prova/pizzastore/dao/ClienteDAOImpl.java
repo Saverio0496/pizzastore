@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import it.prova.pizzastore.model.Cliente;
+import it.prova.pizzastore.model.Utente;
 
 public class ClienteDAOImpl implements ClienteDAO {
 
@@ -18,7 +19,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 	@Override
 	public List<Cliente> list() throws Exception {
-		return null;
+		return entityManager.createQuery("from Cliente", Cliente.class).getResultList();
 	}
 
 	@Override
@@ -27,15 +28,20 @@ public class ClienteDAOImpl implements ClienteDAO {
 	}
 
 	@Override
-	public void update(Cliente input) throws Exception {
+	public void update(Cliente clienteInput) throws Exception {
 	}
 
 	@Override
-	public void insert(Cliente input) throws Exception {
+	public void insert(Cliente clienteInput) throws Exception {
+		if (clienteInput == null) {
+			throw new Exception("Problema valore in input");
+		}
+
+		entityManager.persist(clienteInput);
 	}
 
 	@Override
-	public void delete(Cliente input) throws Exception {
+	public void delete(Cliente clienteInput) throws Exception {
 	}
 
 	@Override
