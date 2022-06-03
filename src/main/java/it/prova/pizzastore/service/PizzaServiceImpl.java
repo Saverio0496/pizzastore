@@ -57,6 +57,24 @@ public class PizzaServiceImpl implements PizzaService {
 
 	@Override
 	public void inserisciNuovo(Pizza pizzaInstance) throws Exception {
+
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			pizzaDAO.setEntityManager(entityManager);
+
+			pizzaDAO.insert(pizzaInstance);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
