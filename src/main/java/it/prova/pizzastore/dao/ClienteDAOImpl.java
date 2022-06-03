@@ -29,6 +29,10 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 	@Override
 	public void update(Cliente clienteInput) throws Exception {
+		if (clienteInput == null) {
+			throw new Exception("Problema valore in input");
+		}
+		clienteInput = entityManager.merge(clienteInput);
 	}
 
 	@Override

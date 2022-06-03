@@ -53,6 +53,24 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void aggiorna(Cliente clienteInstance) throws Exception {
+
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			clienteDAO.setEntityManager(entityManager);
+
+			clienteDAO.update(clienteInstance);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override

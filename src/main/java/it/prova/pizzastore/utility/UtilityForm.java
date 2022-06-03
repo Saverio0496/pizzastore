@@ -39,6 +39,12 @@ public class UtilityForm {
 		return result;
 	}
 
+	public static Cliente createClienteFromParams(String nomeParam, String cognomeParam, String indirizzoParam,
+			boolean attivoParam) {
+		Cliente result = new Cliente(nomeParam, cognomeParam, indirizzoParam, attivoParam);
+		return result;
+	}
+
 	public static boolean validateClienteBean(Cliente clienteToBeValidated) {
 		if (StringUtils.isBlank(clienteToBeValidated.getNome())
 				|| StringUtils.isBlank(clienteToBeValidated.getCognome())
