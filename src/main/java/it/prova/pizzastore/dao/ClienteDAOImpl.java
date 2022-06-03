@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import it.prova.pizzastore.model.Cliente;
-import it.prova.pizzastore.model.Utente;
 
 public class ClienteDAOImpl implements ClienteDAO {
 
@@ -24,7 +23,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 	@Override
 	public Optional<Cliente> findOne(Long id) throws Exception {
-		return null;
+		Cliente result = entityManager.find(Cliente.class, id);
+		return result != null ? Optional.of(result) : Optional.empty();
 	}
 
 	@Override

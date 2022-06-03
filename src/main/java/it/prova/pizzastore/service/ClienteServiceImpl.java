@@ -36,7 +36,19 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente caricaSingoloElemento(Long id) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			clienteDAO.setEntityManager(entityManager);
+
+			return clienteDAO.findOne(id).get();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
