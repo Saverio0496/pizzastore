@@ -23,6 +23,15 @@ public class UtilityForm {
 		return result;
 	}
 
+	public static Pizza createPizzaFromParams(String descrizioneInputParam, String ingredientiInputParam,
+			String prezzoBaseInputParam, boolean attivoInputParam) {
+		Pizza result = new Pizza(descrizioneInputParam, ingredientiInputParam, attivoInputParam);
+		if (NumberUtils.isCreatable(prezzoBaseInputParam)) {
+			result.setPrezzoBase(Integer.parseInt(prezzoBaseInputParam));
+		}
+		return result;
+	}
+
 	public static boolean validatePizzaBean(Pizza pizzaToBeValidated) {
 		if (StringUtils.isBlank(pizzaToBeValidated.getDescrizione())
 				|| StringUtils.isBlank(pizzaToBeValidated.getIngredienti())
@@ -39,9 +48,9 @@ public class UtilityForm {
 		return result;
 	}
 
-	public static Cliente createClienteFromParams(String nomeParam, String cognomeParam, String indirizzoParam,
-			boolean attivoParam) {
-		Cliente result = new Cliente(nomeParam, cognomeParam, indirizzoParam, attivoParam);
+	public static Cliente createClienteFromParams(String nomeInputParam, String cognomeInputParam,
+			String indirizzoInputParam, boolean attivoInputParam) {
+		Cliente result = new Cliente(nomeInputParam, cognomeInputParam, indirizzoInputParam, attivoInputParam);
 		return result;
 	}
 

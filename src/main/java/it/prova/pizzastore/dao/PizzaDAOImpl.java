@@ -29,6 +29,10 @@ public class PizzaDAOImpl implements PizzaDAO {
 
 	@Override
 	public void update(Pizza pizzaInput) throws Exception {
+		if (pizzaInput == null) {
+			throw new Exception("Problema valore in input");
+		}
+		pizzaInput = entityManager.merge(pizzaInput);
 	}
 
 	@Override

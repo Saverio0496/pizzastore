@@ -1,7 +1,6 @@
-package it.prova.pizzastore.web.servlet.cliente;
+package it.prova.pizzastore.web.servlet.pizza;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import it.prova.pizzastore.model.Cliente;
+import it.prova.pizzastore.model.Pizza;
 import it.prova.pizzastore.service.MyServiceFactory;
 
-@WebServlet("/PrepareUpdateClienteServlet")
-public class PrepareUpdateClienteServlet extends HttpServlet {
+@WebServlet("/PrepareUpdatePizzaServlet")
+public class PrepareUpdatePizzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String idPizzaParam = request.getParameter("idPizza");
 
-		String idClienteParam = request.getParameter("idCliente");
-
-		if (!NumberUtils.isCreatable(idClienteParam)) {
+		if (!NumberUtils.isCreatable(idPizzaParam)) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("home").forward(request, response);
@@ -30,17 +27,17 @@ public class PrepareUpdateClienteServlet extends HttpServlet {
 		}
 
 		try {
-			Cliente clienteInstance = MyServiceFactory.getClienteServiceInstance()
-					.caricaSingoloElemento(Long.parseLong(idClienteParam));
+			Pizza pizzaInstance = MyServiceFactory.getPizzaServiceInstance()
+					.caricaSingoloElemento(Long.parseLong(idPizzaParam));
 
-			if (clienteInstance == null) {
+			if (pizzaInstance == null) {
 				request.setAttribute("errorMessage", "Elemento non trovato.");
-				request.getRequestDispatcher("ExecuteListClienteServlet?operationResult=NOT_FOUND").forward(request,
+				request.getRequestDispatcher("ExecuteListPizzaServlet?operationResult=NOT_FOUND").forward(request,
 						response);
 				return;
 			}
 
-			request.setAttribute("update_cliente_attr", clienteInstance);
+			request.setAttribute("update_pizza_attr", pizzaInstance);
 		} catch (Exception e) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			e.printStackTrace();
@@ -49,7 +46,7 @@ public class PrepareUpdateClienteServlet extends HttpServlet {
 			return;
 		}
 
-		request.getRequestDispatcher("/cliente/edit.jsp").forward(request, response);
+		request.getRequestDispatcher("/pizza/edit.jsp").forward(request, response);
 	}
 
 }
