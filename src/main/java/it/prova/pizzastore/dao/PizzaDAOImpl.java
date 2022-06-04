@@ -56,7 +56,8 @@ public class PizzaDAOImpl implements PizzaDAO {
 		if (pizzaInput == null) {
 			throw new Exception("Problema valore in input");
 		}
-		entityManager.remove(entityManager.merge(pizzaInput));
+		pizzaInput.setAttivo(false);
+		entityManager.merge(pizzaInput);
 	}
 
 	@Override
