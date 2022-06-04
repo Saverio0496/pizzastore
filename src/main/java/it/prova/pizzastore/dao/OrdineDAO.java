@@ -11,4 +11,6 @@ public interface OrdineDAO extends IBaseDAO<Ordine> {
 
 	public Optional<Ordine> findOneEager(Long id) throws Exception;
 
+	public Integer calculateOrderPrice(Ordine ordineInput) throws Exception;
+
 }

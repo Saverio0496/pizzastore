@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang3.StringUtils;
 
-import it.prova.pizzastore.model.Cliente;
 import it.prova.pizzastore.model.Pizza;
 
 public class PizzaDAOImpl implements PizzaDAO {
@@ -77,7 +76,7 @@ public class PizzaDAOImpl implements PizzaDAO {
 		}
 		if (example.getPrezzoBase() != null && example.getPrezzoBase() > 0) {
 			whereClauses.add("p.prezzoBase =:prezzoBase ");
-			paramaterMap.put("prezzoBase", "%" + example.getPrezzoBase() + "%");
+			paramaterMap.put("prezzoBase", example.getPrezzoBase());
 		}
 
 		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");

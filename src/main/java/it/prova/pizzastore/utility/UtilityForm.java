@@ -3,6 +3,8 @@ package it.prova.pizzastore.utility;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,6 +12,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import it.prova.pizzastore.model.Cliente;
 import it.prova.pizzastore.model.Ordine;
 import it.prova.pizzastore.model.Pizza;
+import it.prova.pizzastore.model.Utente;
+import it.prova.pizzastore.service.MyServiceFactory;
 
 public class UtilityForm {
 
@@ -35,7 +39,7 @@ public class UtilityForm {
 	public static boolean validatePizzaBean(Pizza pizzaToBeValidated) {
 		if (StringUtils.isBlank(pizzaToBeValidated.getDescrizione())
 				|| StringUtils.isBlank(pizzaToBeValidated.getIngredienti())
-				|| pizzaToBeValidated.getPrezzoBase() <= 0) {
+				|| pizzaToBeValidated.getPrezzoBase() == 0) {
 			return false;
 		}
 		return true;
@@ -63,20 +67,42 @@ public class UtilityForm {
 		return true;
 	}
 
-	public static Ordine createOrdineFromParams(String dataInputParam, String codiceInputParam,
-			String costoTotaleOrdineInputParam) {
+	public static Ordine createOrdineFromParams(String clienteInputParam, String[] pizzeInputParam,
+			String dataInputParam, String codiceInputParam, String utenteInputParam)
+			throws NumberFormatException, Exception {
 
 		Ordine result = new Ordine(codiceInputParam);
+		if (NumberUtils.isCreatable(clienteInputParam)) {
+			Cliente cliente = new Cliente();
+			cliente.setId(Long.parseLong(clienteInputParam));
+			result.setCliente(cliente);
+		}
+		Set<Pizza> elencoPizzePerOrdine = new HashSet<Pizza>();
+		if (pizzeInputParam == null || pizzeInputParam.length == 0) {
+			result.setPizze(null);
+		} else {
+			for (String pizzaItem : pizzeInputParam) {
+				if (NumberUtils.isCreatable(pizzaItem)) {
+				elencoPizzePerOrdine.add(
+						MyServiceFactory.getPizzaServiceInstance().caricaSingoloElemento(Long.parseLong(pizzaItem)));
+			    }
+		    }
+		}
+		result.setPizze(elencoPizzePerOrdine);
 		result.setData(parseDateFromString(dataInputParam));
-		if (NumberUtils.isCreatable(costoTotaleOrdineInputParam)) {
-			result.setCostoTotaleOrdine(Integer.parseInt(costoTotaleOrdineInputParam));
+		if (NumberUtils.isCreatable(utenteInputParam)) {
+			Utente utente = new Utente();
+			utente.setId(Long.parseLong(utenteInputParam));
+			result.setUtente(utente);
 		}
 		return result;
 	}
 
 	public static boolean validateOrdineBean(Ordine ordineToBeValidated) {
 		if (ordineToBeValidated.getData() == null || StringUtils.isBlank(ordineToBeValidated.getCodice())
-				|| ordineToBeValidated.getCostoTotaleOrdine() <= 0) {
+				|| ordineToBeValidated.getCliente() == null || ordineToBeValidated.getCliente().getId() == null
+				|| ordineToBeValidated.getCliente().getId() < 1 || ordineToBeValidated.getUtente() == null
+				|| ordineToBeValidated.getUtente().getId() < 1) {
 			return false;
 		}
 		return true;

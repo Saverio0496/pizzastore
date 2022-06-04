@@ -48,8 +48,9 @@
 							
 								<div class="col-md-6">
 									<label for="prezzobase" class="form-label">Prezzo Base<span class="text-danger">*</span></label>
-									<input type="text" name="prezzobase" id="prezzobase" class="form-control" placeholder="Inserire il prezzo base" value="${insert_pizza_attr.prezzoBase }">
+									<input type="number" class="form-control" name="prezzobase" id="prezzobase" placeholder="Inserire il prezzo base">
 								</div>
+
 								
 								<div class="col-12">
 									<button type="submit" name="insertSubmit" value="insertSubmit" id="insertSubmit" class="btn btn-primary">Conferma</button>

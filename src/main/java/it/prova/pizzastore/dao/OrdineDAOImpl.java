@@ -33,6 +33,11 @@ public class OrdineDAOImpl implements OrdineDAO {
 
 	@Override
 	public void insert(Ordine ordineInput) throws Exception {
+		if (ordineInput == null) {
+			throw new Exception("Problema valore in input");
+		}
+
+		entityManager.persist(ordineInput);
 	}
 
 	@Override
@@ -49,5 +54,13 @@ public class OrdineDAOImpl implements OrdineDAO {
 		return entityManager.createQuery(
 				"from Ordine o left join fetch o.cliente left join fetch o.utente left join fetch o.pizze where o.id=:idOrdine",
 				Ordine.class).setParameter("idOrdine", id).getResultList().stream().findFirst();
+	}
+
+	@Override
+	public Integer calculateOrderPrice(Ordine ordineInput) throws Exception {
+		return entityManager
+				.createQuery("select sum(p.prezzoBase) from Ordine o join o.pizze p where o.codice = :codice",
+						Long.class)
+				.setParameter("codice", ordineInput.getCodice()).getFirstResult();
 	}
 }

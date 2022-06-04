@@ -60,9 +60,9 @@
 						</div>
 
 						<div class="col-md-6">
-							<label for="prezzobase" class="form-label">Prezzo Base </label> <input
-								type="text" name="prezzobase" id="prezzobase" class="form-control" placeholder="Inserire il prezzo base">
-						</div>
+									<label for="prezzoBase" class="form-label">Prezzo Base</label>
+									<input type="number" class="form-control" name="prezzoBase" id="prezzoBase" placeholder="Inserire il prezzo base">
+								</div>
 
 						<div class="col-12">
 							<button type="submit" name="submit" value="submit" id="submit"

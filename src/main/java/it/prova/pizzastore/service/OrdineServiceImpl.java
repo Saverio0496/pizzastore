@@ -12,10 +12,12 @@ public class OrdineServiceImpl implements OrdineService {
 
 	private OrdineDAO ordineDAO;
 
-	public void setOrdineDAO(OrdineDAO Ordine) {
+	@Override
+	public void setOrdineDAO(OrdineDAO ordineDAO) {
 		this.ordineDAO = ordineDAO;
 	}
 
+	@Override
 	public List<Ordine> listAllElements() throws Exception {
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
 
@@ -32,6 +34,7 @@ public class OrdineServiceImpl implements OrdineService {
 		}
 	}
 
+	@Override
 	public Ordine caricaSingoloElemento(Long id) throws Exception {
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
 
@@ -48,19 +51,41 @@ public class OrdineServiceImpl implements OrdineService {
 		}
 	}
 
+	@Override
 	public void aggiorna(Ordine ordineInstance) throws Exception {
 	}
 
+	@Override
 	public void inserisciNuovo(Ordine ordineInstance) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			ordineDAO.setEntityManager(entityManager);
+
+			ordineDAO.insert(ordineInstance);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
+	@Override
 	public void rimuovi(Long idOrdineToRemove) throws Exception {
 	}
 
+	@Override
 	public List<Ordine> findByExample(Ordine example) throws Exception {
 		return null;
 	}
 
+	@Override
 	public Ordine caricaSingoloElementoEager(Long id) throws Exception {
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
 
@@ -70,6 +95,29 @@ public class OrdineServiceImpl implements OrdineService {
 			return ordineDAO.findOneEager(id).orElse(null);
 
 		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
+	
+	@Override
+	public void calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			ordineDAO.setEntityManager(entityManager);
+			
+			ordineInstance.setCostoTotaleOrdine(ordineDAO.calculateOrderPrice(ordineInstance));
+
+			ordineDAO.update(ordineInstance);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {

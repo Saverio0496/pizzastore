@@ -20,6 +20,8 @@ public interface OrdineService {
 	public List<Ordine> findByExample(Ordine example) throws Exception;
 	
 	public Ordine caricaSingoloElementoEager(Long id) throws Exception;
+	
+	public void calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception;
 
 	// per injection
 	public void setOrdineDAO(OrdineDAO Ordine);
