@@ -23,19 +23,20 @@ public class OrdineDAOImpl implements OrdineDAO {
 
 	@Override
 	public Optional<Ordine> findOne(Long id) throws Exception {
-		return null;
+		Ordine result = entityManager.find(Ordine.class, id);
+		return result != null ? Optional.of(result) : Optional.empty();
 	}
 
 	@Override
-	public void update(Ordine input) throws Exception {
+	public void update(Ordine ordineInput) throws Exception {
 	}
 
 	@Override
-	public void insert(Ordine input) throws Exception {
+	public void insert(Ordine ordineInput) throws Exception {
 	}
 
 	@Override
-	public void delete(Ordine input) throws Exception {
+	public void delete(Ordine ordineInput) throws Exception {
 	}
 
 	@Override
@@ -43,4 +44,10 @@ public class OrdineDAOImpl implements OrdineDAO {
 		return null;
 	}
 
+	@Override
+	public Optional<Ordine> findOneEager(Long id) throws Exception {
+		return entityManager.createQuery(
+				"from Ordine o left join fetch o.cliente left join fetch o.utente left join fetch o.pizze where o.id=:idOrdine",
+				Ordine.class).setParameter("idOrdine", id).getResultList().stream().findFirst();
+	}
 }

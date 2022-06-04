@@ -56,7 +56,7 @@
 											<td><fmt:formatDate type = "date" value = "${ordineItem.data }" /></td>
 											<td>${ordineItem.closed }</td>
 											<td>${ordineItem.codice }</td>
-											<td>${pizzaItem.costoTotaleOrdine }</td>
+											<td>${ordineItem.costoTotaleOrdine }</td>
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaOrdineServlet?idOrdine=${ordineItem.id }">Visualizza</a>
 												<a class="btn btn-outline-danger btn-sm" href="PrepareUpdateOrdineServlet?idOrdine=${ordineItem.id }">Edit</a>

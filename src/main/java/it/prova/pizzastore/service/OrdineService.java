@@ -18,6 +18,8 @@ public interface OrdineService {
 	public void rimuovi(Long idOrdineToRemove) throws Exception;
 
 	public List<Ordine> findByExample(Ordine example) throws Exception;
+	
+	public Ordine caricaSingoloElementoEager(Long id) throws Exception;
 
 	// per injection
 	public void setOrdineDAO(OrdineDAO Ordine);

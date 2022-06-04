@@ -33,7 +33,19 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	public Ordine caricaSingoloElemento(Long id) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findOne(id).get();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	public void aggiorna(Ordine ordineInstance) throws Exception {
@@ -49,4 +61,19 @@ public class OrdineServiceImpl implements OrdineService {
 		return null;
 	}
 
+	public Ordine caricaSingoloElementoEager(Long id) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findOneEager(id).orElse(null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
 }
