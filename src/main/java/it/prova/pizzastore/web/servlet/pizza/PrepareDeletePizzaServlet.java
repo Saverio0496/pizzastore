@@ -1,4 +1,4 @@
-package it.prova.pizzastore.web.servlet.cliente;
+package it.prova.pizzastore.web.servlet.pizza;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import it.prova.pizzastore.exceptions.ElementNotFoundException;
+import it.prova.pizzastore.model.Pizza;
 import it.prova.pizzastore.service.MyServiceFactory;
 
-@WebServlet("/ExecuteDeleteClienteServlet")
-public class ExecuteDeleteClienteServlet extends HttpServlet {
+@WebServlet("/PrepareDeletePizzaServlet")
+public class PrepareDeletePizzaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String idClienteParam = request.getParameter("idCliente");
+		String idPizzaParam = request.getParameter("idPizza");
 
-		if (!NumberUtils.isCreatable(idClienteParam)) {
+		if (!NumberUtils.isCreatable(idPizzaParam)) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("home").forward(request, response);
@@ -28,10 +28,17 @@ public class ExecuteDeleteClienteServlet extends HttpServlet {
 		}
 
 		try {
-			MyServiceFactory.getClienteServiceInstance().rimuovi(Long.parseLong(idClienteParam));
-		} catch (ElementNotFoundException e) {
-			request.getRequestDispatcher("ExecuteListClienteServlet?operationResult=NOT_FOUND").forward(request, response);
-			return;
+			Pizza pizzaInstance = MyServiceFactory.getPizzaServiceInstance()
+					.caricaSingoloElemento(Long.parseLong(idPizzaParam));
+
+			if (pizzaInstance == null) {
+				request.setAttribute("errorMessage", "Elemento non trovato.");
+				request.getRequestDispatcher("ExecuteListPizzaServlet?operationResult=NOT_FOUND").forward(request,
+						response);
+				return;
+			}
+
+			request.setAttribute("delete_pizza_attr", pizzaInstance);
 		} catch (Exception e) {
 			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			e.printStackTrace();
@@ -40,6 +47,7 @@ public class ExecuteDeleteClienteServlet extends HttpServlet {
 			return;
 		}
 
-		response.sendRedirect("ExecuteListClienteServlet?operationResult=SUCCESS");
+		request.getRequestDispatcher("/pizza/delete.jsp").forward(request, response);
 	}
+
 }

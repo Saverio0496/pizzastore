@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import it.prova.pizzastore.dao.PizzaDAO;
+import it.prova.pizzastore.exceptions.ElementNotFoundException;
 import it.prova.pizzastore.model.Pizza;
 import it.prova.pizzastore.web.listener.LocalEntityManagerFactoryListener;
 
@@ -96,6 +97,25 @@ public class PizzaServiceImpl implements PizzaService {
 
 	@Override
 	public void rimuovi(Long idPizzaToRemove) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			pizzaDAO.setEntityManager(entityManager);
+			Pizza pizzaToRemove = pizzaDAO.findOne(idPizzaToRemove).orElse(null);
+			if (pizzaToRemove == null)
+				throw new ElementNotFoundException("Pizza con id: " + idPizzaToRemove + " non trovata.");
+
+			pizzaDAO.delete(pizzaToRemove);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
