@@ -55,7 +55,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 		if (clienteInput == null) {
 			throw new Exception("Problema valore in input");
 		}
-		entityManager.remove(entityManager.merge(clienteInput));
+		clienteInput.setAttivo(false);
+		entityManager.merge(clienteInput);
 	}
 
 	@Override

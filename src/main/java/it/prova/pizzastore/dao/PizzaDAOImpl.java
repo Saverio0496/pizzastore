@@ -75,7 +75,7 @@ public class PizzaDAOImpl implements PizzaDAO {
 			paramaterMap.put("ingredienti", "%" + example.getIngredienti() + "%");
 		}
 		if (example.getPrezzoBase() != null && example.getPrezzoBase() > 0) {
-			whereClauses.add("p.prezzoBase >= :prezzoBase ");
+			whereClauses.add("p.prezzoBase =:prezzoBase ");
 			paramaterMap.put("prezzoBase", "%" + example.getPrezzoBase() + "%");
 		}
 
