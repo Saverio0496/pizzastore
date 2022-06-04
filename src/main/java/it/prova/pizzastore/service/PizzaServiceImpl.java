@@ -120,7 +120,19 @@ public class PizzaServiceImpl implements PizzaService {
 
 	@Override
 	public List<Pizza> findByExample(Pizza example) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			pizzaDAO.setEntityManager(entityManager);
+
+			return pizzaDAO.findByExample(example);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 }

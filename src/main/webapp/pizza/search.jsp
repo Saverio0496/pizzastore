@@ -11,7 +11,7 @@
 <body class="d-flex flex-column h-100">
 
 	<!-- Fixed navbar -->
-	<jsp:include page="/utente/navbarAdmin.jsp"></jsp:include>
+	<jsp:include page="/utente/navbarPizzaiolo.jsp"></jsp:include>
 
 
 	<!-- Begin page content -->
@@ -40,28 +40,28 @@
 
 			<div class='card'>
 				<div class='card-header'>
-					<h5>Ricerca cliente</h5>
+					<h5>Ricerca pizza</h5>
 				</div>
 				<div class='card-body'>
 
 
-					<form method="post" action="ExecuteSearchClienteServlet"
+					<form method="post" action="ExecuteSearchPizzaServlet"
 						class="row g-3" novalidate="novalidate">
 
 
 						<div class="col-md-6">
-							<label for="nome" class="form-label">Nome </label> <input
-								type="text" name="nome" id="nome" class="form-control" placeholder="Inserire il nome">
+							<label for="descrizione" class="form-label">Descrizione </label> <input
+								type="text" name="descrizione" id="descrizione" class="form-control" placeholder="Inserire la descrizione">
 						</div>
 
 						<div class="col-md-6">
-							<label for="cognome" class="form-label">Cognome </label> <input
-								type="text" name="cognome" id="cognome" class="form-control" placeholder="Inserire il cognome">
+							<label for="ingredienti" class="form-label">Ingredienti </label> <input
+								type="text" name="ingredienti" id="ingredienti" class="form-control" placeholder="Inserire gli ingredienti">
 						</div>
 
 						<div class="col-md-6">
-							<label for="indirizzo" class="form-label">Indirizzo </label> <input
-								type="text" name="indirizzo" id="indirizzo"  class="form-control" placeholder="Inserire l'indirizzo">
+							<label for="prezzobase" class="form-label">Prezzo Base </label> <input
+								type="text" name="prezzobase" id="prezzobase" class="form-control" placeholder="Inserire il prezzo base">
 						</div>
 
 						<div class="col-12">
