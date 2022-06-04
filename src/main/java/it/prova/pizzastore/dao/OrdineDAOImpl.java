@@ -18,7 +18,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 
 	@Override
 	public List<Ordine> list() throws Exception {
-		return null;
+		return entityManager.createQuery("from Ordine", Ordine.class).getResultList();
 	}
 
 	@Override

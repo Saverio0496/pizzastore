@@ -2,8 +2,11 @@ package it.prova.pizzastore.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import it.prova.pizzastore.dao.OrdineDAO;
 import it.prova.pizzastore.model.Ordine;
+import it.prova.pizzastore.web.listener.LocalEntityManagerFactoryListener;
 
 public class OrdineServiceImpl implements OrdineService {
 
@@ -14,7 +17,19 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	public List<Ordine> listAllElements() throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	public Ordine caricaSingoloElemento(Long id) throws Exception {
