@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import it.prova.pizzastore.dao.OrdineDAO;
+import it.prova.pizzastore.exceptions.ElementNotFoundException;
 import it.prova.pizzastore.model.Ordine;
 import it.prova.pizzastore.web.listener.LocalEntityManagerFactoryListener;
 
@@ -78,6 +79,25 @@ public class OrdineServiceImpl implements OrdineService {
 
 	@Override
 	public void rimuovi(Long idOrdineToRemove) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			ordineDAO.setEntityManager(entityManager);
+			Ordine ordineToRemove = ordineDAO.findOne(idOrdineToRemove).orElse(null);
+			if (ordineToRemove == null)
+				throw new ElementNotFoundException("Ordine con id: " + idOrdineToRemove + " non trovato.");
+
+			ordineDAO.delete(ordineToRemove);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
@@ -101,7 +121,7 @@ public class OrdineServiceImpl implements OrdineService {
 			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
 		}
 	}
-	
+
 	@Override
 	public void calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception {
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
@@ -110,7 +130,7 @@ public class OrdineServiceImpl implements OrdineService {
 			entityManager.getTransaction().begin();
 
 			ordineDAO.setEntityManager(entityManager);
-			
+
 			ordineInstance.setCostoTotaleOrdine(ordineDAO.calculateOrderPrice(ordineInstance));
 
 			ordineDAO.update(ordineInstance);
