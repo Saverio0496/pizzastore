@@ -42,13 +42,13 @@ public class Ordine {
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "utente_id", nullable = false)
-	private Utente utente;
-
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinTable(name = "ordine_pizza", joinColumns = @JoinColumn(name = "ordine_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "pizza_id", referencedColumnName = "ID"))
 	private Set<Pizza> pizze = new HashSet<Pizza>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "utente_id", nullable = false)
+	private Utente utente;
 
 	@CreationTimestamp
 	private LocalDateTime createDateTime;
@@ -58,48 +58,25 @@ public class Ordine {
 	public Ordine() {
 	}
 
-	public Ordine(Date data, boolean closed, String codice, Integer costoTotaleOrdine, Cliente cliente, Utente utente,
-			Set<Pizza> pizze) {
+	public Ordine(String codice, Date data) {
+		super();
+		this.codice = codice;
 		this.data = data;
-		this.closed = closed;
-		this.codice = codice;
-		this.costoTotaleOrdine = costoTotaleOrdine;
-		this.cliente = cliente;
-		this.utente = utente;
-		this.pizze = pizze;
-	}
-
-	public Ordine(Date data, boolean closed, String codice, Integer costoTotaleOrdine, Cliente cliente, Utente utente) {
-		this.data = data;
-		this.closed = closed;
-		this.codice = codice;
-		this.costoTotaleOrdine = costoTotaleOrdine;
-		this.cliente = cliente;
-		this.utente = utente;
-	}
-
-	public Ordine(Date data, boolean closed, String codice, Integer costoTotaleOrdine, Cliente cliente) {
-		this.data = data;
-		this.closed = closed;
-		this.codice = codice;
-		this.costoTotaleOrdine = costoTotaleOrdine;
-		this.cliente = cliente;
-	}
-
-	public Ordine(Date data, boolean closed, String codice, Integer costoTotaleOrdine) {
-		this.data = data;
-		this.closed = closed;
-		this.codice = codice;
-		this.costoTotaleOrdine = costoTotaleOrdine;
-	}
-
-	public Ordine(String codice, Integer costoTotaleOrdine) {
-		this.codice = codice;
-		this.costoTotaleOrdine = costoTotaleOrdine;
 	}
 
 	public Ordine(String codice) {
+		super();
 		this.codice = codice;
+	}
+
+	public Ordine(String codice, Date data, Integer costoTotaleOrdine, Cliente cliente, Set<Pizza> pizze, Utente utente) {
+		super();
+		this.codice = codice;
+		this.data = data;
+		this.costoTotaleOrdine = costoTotaleOrdine;
+		this.cliente = cliente;
+		this.pizze = pizze;
+		this.utente = utente;
 	}
 
 	public Long getId() {
@@ -118,28 +95,20 @@ public class Ordine {
 		this.data = data;
 	}
 
-	public boolean isClosed() {
-		return closed;
-	}
-
-	public void setClosed(boolean closed) {
-		this.closed = closed;
-	}
-
-	public String getCodice() {
-		return codice;
-	}
-
-	public void setCodice(String codice) {
-		this.codice = codice;
-	}
-
 	public Integer getCostoTotaleOrdine() {
 		return costoTotaleOrdine;
 	}
 
 	public void setCostoTotaleOrdine(Integer costoTotaleOrdine) {
 		this.costoTotaleOrdine = costoTotaleOrdine;
+	}
+
+	public boolean isClosed() {
+		return closed;
+	}
+
+	public void setClosed(boolean closed) {
+		this.closed = closed;
 	}
 
 	public Cliente getCliente() {
@@ -150,20 +119,20 @@ public class Ordine {
 		this.cliente = cliente;
 	}
 
-	public Utente getUtente() {
-		return utente;
-	}
-
-	public void setUtente(Utente utente) {
-		this.utente = utente;
-	}
-
 	public Set<Pizza> getPizze() {
 		return pizze;
 	}
 
 	public void setPizze(Set<Pizza> pizze) {
 		this.pizze = pizze;
+	}
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
 	}
 
 	public LocalDateTime getCreateDateTime() {
@@ -180,6 +149,14 @@ public class Ordine {
 
 	public void setUpdateDateTime(LocalDateTime updateDateTime) {
 		this.updateDateTime = updateDateTime;
+	}
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 
 }

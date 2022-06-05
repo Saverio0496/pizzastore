@@ -83,10 +83,10 @@ public class UtilityForm {
 		} else {
 			for (String pizzaItem : pizzeInputParam) {
 				if (NumberUtils.isCreatable(pizzaItem)) {
-				elencoPizzePerOrdine.add(
-						MyServiceFactory.getPizzaServiceInstance().caricaSingoloElemento(Long.parseLong(pizzaItem)));
-			    }
-		    }
+					elencoPizzePerOrdine.add(MyServiceFactory.getPizzaServiceInstance()
+							.caricaSingoloElemento(Long.parseLong(pizzaItem)));
+				}
+			}
 		}
 		result.setPizze(elencoPizzePerOrdine);
 		result.setData(parseDateFromString(dataInputParam));
@@ -99,12 +99,8 @@ public class UtilityForm {
 	}
 
 	public static boolean validateOrdineBean(Ordine ordineToBeValidated) {
-		if (ordineToBeValidated.getData() == null || StringUtils.isBlank(ordineToBeValidated.getCodice())
-				|| ordineToBeValidated.getCliente() == null || ordineToBeValidated.getCliente().getId() == null
-				|| ordineToBeValidated.getCliente().getId() < 1 || ordineToBeValidated.getUtente() == null
-				|| ordineToBeValidated.getUtente().getId() < 1) {
+		if (StringUtils.isBlank(ordineToBeValidated.getCodice()) || ordineToBeValidated.getData() == null)
 			return false;
-		}
 		return true;
 	}
 

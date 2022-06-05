@@ -7,7 +7,7 @@
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="../header.jsp" />
 	   
-	   <title>Inserisci Nuovo Ordine</title>
+	   <title>Inserisci Ordine</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -35,16 +35,22 @@
 		
 							<form method="post" action="ExecuteInsertOrdineServlet" class="row g-3" novalidate="novalidate">
 							
+							
+								<div class="col-md-6">
+									<label for="codice" class="form-label">Codice <span class="text-danger">*</span></label>
+									<input type="text" name="codice" id="codice" class="form-control" placeholder="Inserire il codice" value="${insert_ordine_attr.codice }">
+								</div>
 								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_ordine_attr.data}' />
 								<div class="col-md-6">
-									<label for="data" class="form-label">Data<span class="text-danger">*</span></label>
+									<label for="data" class="form-label">Data <span class="text-danger">*</span></label>
 	                        		<input class="form-control" id="data" type="date" placeholder="dd/MM/yy" 
 	                        				title="formato : gg/mm/aaaa"  name="data" value="${parsedDate}" >
 								</div>
 								
+								
 								<div class="col-md-6"> 
-									<label for="pizza.ids">Pizze Ordine<span class="text-danger">*</span></label><br>
+									<label for="pizza.id">Pizze <span class="text-danger">*</span></label><br>
 								      	<c:forEach items="${pizza_list_attribute }" var="pizzaItem">
 								      		<input type="checkbox" id="pizzaItem" name="pizzaItem" value="">
 											<label for="pizzaItem">${pizzaItem.descrizione }</label><br>
@@ -52,8 +58,8 @@
 								</div>
 								
 								<div class="col-md-6"> 
-									<label for="cliente_id">Cliente<span class="text-danger">*</span></label>
-								    <select class="form-select" id="cliente_id" name="cliente_id">
+									<label for="cliente.id">Cliente <span class="text-danger">*</span></label>
+								    <select class="form-select" id="cliente.id" name="cliente.id">
 								    	<option value="" selected> -- Selezionare una voce -- </option>
 								      	<c:forEach items="${cliente_list_attribute }" var="clienteItem">
 								      		<option value="${clienteItem.id}" ${insert_ordine_attr.cliente.id == clienteItem.id?'selected':''} >${clienteItem.nome } ${clienteItem.cognome }</option>
@@ -62,21 +68,14 @@
 								</div>
 								
 								<div class="col-md-6"> 
-									<label for="utente_id">Fattorino<span class="text-danger">*</span></label>
-								    <select class="form-select" id="utente_id" name="utente_id">
+									<label for="utente.id">Utente<span class="text-danger">*</span></label>
+								    <select class="form-select" id="utente.id" name="utente.id">
 								    	<option value="" selected> -- Selezionare una voce -- </option>
 								      	<c:forEach items="${utente_list_attribute }" var="utenteItem">
 								      		<option value="${utenteItem.id}" ${insert_ordine_attr.utente.id == utenteItem.id?'selected':''} >${utenteItem.nome } ${utenteItem.cognome }</option>
 								      	</c:forEach>
 								    </select>
 								</div>
-								
-								
-								<div class="col-md-6">
-									<label for="codice" class="form-label">Codice<span class="text-danger">*</span></label>
-									<input type="text" name="codice" id="codice" class="form-control" placeholder="Inserire il codice" value="${insert_ordine_attr.codice }">
-								</div>
-								
 								
 								<div class="col-12">
 									<button type="submit" name="insertSubmit" value="insertSubmit" id="insertSubmit" class="btn btn-primary">Conferma</button>

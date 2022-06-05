@@ -15,48 +15,40 @@ import it.prova.pizzastore.utility.UtilityForm;
 public class ExecuteInsertOrdineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		        // estraggo input
-		        String clienteParam = request.getParameter("cliente_id");
-				String [] pizzeParam = request.getParameterValues("pizza_id");
-				String dataParam = request.getParameter("data");
-				String codiceParam = request.getParameter("codice");
-				String utenteParam = request.getParameter("utente_id");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-				Ordine ordineInstance = new Ordine();
+		// estraggo input
+		String clienteParam = request.getParameter("cliente.id");
+		String[] pizzeParam = request.getParameterValues("pizza.id");
+		String dataParam = request.getParameter("data");
+		String codiceParam = request.getParameter("codice");
+		String utenteParam = request.getParameter("utente.id");
 
-				try {
-					
-					 ordineInstance = UtilityForm.createOrdineFromParams(clienteParam, pizzeParam, dataParam, codiceParam, utenteParam);
-					// se la validazione non risulta ok
-					if (!UtilityForm.validateOrdineBean(ordineInstance)) {
-						request.setAttribute("insert_ordine_attr", ordineInstance);
-						request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-						request.getRequestDispatcher("home").forward(request, response);
-						return;
-					}
-					
-				    MyServiceFactory.getOrdineServiceInstance().calcolaPrezzoOrdine(ordineInstance);
-					
-					
+		Ordine ordineInstance = new Ordine();
 
-					// se sono qui i valori sono ok quindi posso creare l'oggetto da inserire
-					// occupiamoci delle operazioni di business
-					MyServiceFactory.getOrdineServiceInstance().inserisciNuovo(ordineInstance);
-				} catch (Exception e) {
-					e.printStackTrace();
-					request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
-					request.getRequestDispatcher("home").forward(request, response);
-					return;
-				}
+		try {
 
-				// andiamo ai risultati
-				// uso il sendRedirect con parametro per evitare il problema del double save on
-				// refresh
-				response.sendRedirect("ExecuteListOrdineServlet?operationResult=SUCCESS");
-
+			ordineInstance = UtilityForm.createOrdineFromParams(clienteParam, pizzeParam, dataParam, codiceParam,
+					utenteParam);
+			if (!UtilityForm.validateOrdineBean(ordineInstance)) {
+				request.setAttribute("insert_ordine_attr", ordineInstance);
+				request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+				request.getRequestDispatcher("home").forward(request, response);
+				return;
 			}
+
+			MyServiceFactory.getOrdineServiceInstance().calcolaPrezzoOrdine(ordineInstance);
+
+			MyServiceFactory.getOrdineServiceInstance().inserisciNuovo(ordineInstance);
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
+			request.getRequestDispatcher("home").forward(request, response);
+			return;
+		}
+
+		response.sendRedirect("ExecuteListOrdineServlet?operationResult=SUCCESS");
+
+	}
 }
-
-

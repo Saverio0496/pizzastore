@@ -12,7 +12,7 @@
 	   <body class="d-flex flex-column h-100">
 	   
 	   		<!-- Fixed navbar -->
-	   		<jsp:include page="/utente/navbarPizzaiolo.jsp"></jsp:include>
+	   		<jsp:include page="/utente/navbarFattorino.jsp"></jsp:include>
 	    
 			
 			<!-- Begin page content -->
@@ -21,7 +21,7 @@
 			  
 			  		<div class='card'>
 					    <div class='card-header'>
-					        <h5>Visualizza dettaglio ordine</h5>
+					        <h5>Visualizza dettaglio ordine aperto</h5>
 					    </div>
 					    
 					
@@ -103,10 +103,10 @@
 					    <!-- end card body -->
 					    
 					    <div class='card-footer'>
-					    	<form action="ExecuteDeleteOrdineServlet" method="post">
+					    	<form action="ExecuteDeleteOrdiniApertiServlet" method="post">
 					    		<input type="hidden" name="idOrdine" value="${delete_ordine_attr.id}">
 						    	<button type="submit" name="submit" id="submit" class="btn btn-danger">Conferma</button>
-						        <a href="ExecuteListOrdineServlet" class='btn btn-outline-secondary' style='width:80px'>
+						        <a href="ExecuteListOrdiniApertiServlet" class='btn btn-outline-secondary' style='width:80px'>
 						            <i class='fa fa-chevron-left'></i> Back
 						        </a>
 					        </form>

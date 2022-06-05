@@ -102,7 +102,19 @@ public class OrdineServiceImpl implements OrdineService {
 
 	@Override
 	public List<Ordine> findByExample(Ordine example) throws Exception {
-		return null;
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findByExample(example);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
@@ -138,6 +150,23 @@ public class OrdineServiceImpl implements OrdineService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
+	
+	@Override
+	public List<Ordine> listAllOrdiniAperti(Long idFattorino) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.listFattorini(idFattorino);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		} finally {

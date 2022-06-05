@@ -13,4 +13,6 @@ public interface OrdineDAO extends IBaseDAO<Ordine> {
 
 	public Integer calculateOrderPrice(Ordine ordineInput) throws Exception;
 
+	public List<Ordine> listFattorini(Long idFattorino) throws Exception;
+
 }

@@ -36,7 +36,7 @@
 	   
 	   
 	   		<!-- Fixed navbar -->
-	   		<jsp:include page="./navbarPizzaiolo.jsp"></jsp:include>
+	   		<jsp:include page="./navbarFattorino.jsp"></jsp:include>
 	    
 			
 			<!-- Begin page content -->
@@ -51,39 +51,14 @@
 			     <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Benvenuto in Pizza Store</h1>
-				        <p class="col-md-8 fs-4">Da qui potrai gestire le varie pizze che tu stesso puoi preparare. </p>
-				        <a class="btn btn-primary btn-lg" href="ExecuteListPizzaServlet">Gestione Pizze</a>
+				        <p class="col-md-8 fs-4">Controlla da qui tutti gli ordini ancora da espletare. </p>
+				        <a class="btn btn-primary btn-lg" href="ExecuteListOrdiniApertiServlet">Gestione Ordini Aperti</a>
 				      </div>
 			    </div>
 			    
 			  </div>
 			  
-			  <!--  features di bootstrap 'Columns with icons'  -->
-			  <div class="container px-4 py-5" id="featured-3">
-			    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-			      <div class="feature col">
-			        <div class="feature-icon bg-primary bg-gradient">
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
-			        </div>
-			        <h2>Inserisci Nuovo Ordine</h2>
-			        <p>Inserisci un nuovo ordine arrivato in pizzeria direttamente da qui.</p>
-			        <a href="PrepareInsertOrdineServlet" class="icon-link">
-			          Vai alla funzionalità
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
-			        </a>
-			      </div>
-			      <div class="feature col">
-			        <div class="feature-icon bg-primary bg-gradient">
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
-			        </div>
-			        <h2>Gestione Ordini</h2>
-			        <p>Gestisci tutti gli ordini della pizzeria.</p>
-			        <a href="ExecuteListOrdineServlet" class="icon-link">
-			          Vai alla funzionalità
-			          <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"/></svg>
-			        </a>
-			      </div>
-			  
+			 
 			</main>
 			
 			<!-- Footer -->

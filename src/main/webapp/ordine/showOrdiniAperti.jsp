@@ -6,13 +6,13 @@
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="../header.jsp" />
 	 	
-	   <title>Rimuovi Ordine</title>
+	   <title>Visualizza Elemento</title>
 	   
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
 	   		<!-- Fixed navbar -->
-	   		<jsp:include page="/utente/navbarPizzaiolo.jsp"></jsp:include>
+	   		<jsp:include page="/utente/navbarFattorino.jsp"></jsp:include>
 	    
 			
 			<!-- Begin page content -->
@@ -21,34 +21,34 @@
 			  
 			  		<div class='card'>
 					    <div class='card-header'>
-					        <h5>Visualizza dettaglio ordine</h5>
+					        <h5>Visualizza dettaglio ordine aperto</h5>
 					    </div>
 					    
 					
 					    <div class='card-body'>	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Id:</dt>
-							  <dd class="col-sm-9">${delete_ordine_attr.id}</dd>
+							  <dd class="col-sm-9">${show_ordine_attr.id}</dd>
 					    	</dl>					    	
 					    				    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data:</dt>
-							  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${delete_ordine_attr.data}" /></dd>
+							  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_ordine_attr.data}" /></dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Closed:</dt>
-							  <dd class="col-sm-9">${delete_ordine_attr.closed}</dd>
+							  <dd class="col-sm-9">${show_ordine_attr.closed}</dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Codice:</dt>
-							  <dd class="col-sm-9">${delete_ordine_attr.codice}</dd>
+							  <dd class="col-sm-9">${show_ordine_attr.codice}</dd>
 					    	</dl>
 					    	
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Costo Totale Ordine:</dt>
-							  <dd class="col-sm-9">${delete_ordine_attr.costoTotaleOrdine}</dd>
+							  <dd class="col-sm-9">${show_ordine_attr.costoTotaleOrdine}</dd>
 					    	</dl>
 					    	
 					    	<!-- info Cliente -->
@@ -61,19 +61,19 @@
 							  <div class="card card-body">
 							  	<dl class="row">
 								  <dt class="col-sm-3 text-right">Nome:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.cliente.nome}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.cliente.nome}</dd>
 							   	</dl>
 							   	<dl class="row">
 								  <dt class="col-sm-3 text-right">Cognome:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.cliente.cognome}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.cliente.cognome}</dd>
 							   	</dl>
 							   	<dl class="row">
 								  <dt class="col-sm-3 text-right">Indirizzo:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.cliente.indirizzo}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.cliente.indirizzo}</dd>
 							   	</dl>
 							   	<dl class="row">
 								  <dt class="col-sm-3 text-right">Attivo:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.cliente.attivo}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.cliente.attivo}</dd>
 							   	</dl>
 							    
 							  </div>
@@ -90,26 +90,23 @@
 							  <div class="card card-body">
 							  	<dl class="row">
 								  <dt class="col-sm-3 text-right">Nome:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.utente.nome}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.utente.nome}</dd>
 							   	</dl>
 							   	<dl class="row">
 								  <dt class="col-sm-3 text-right">Cognome:</dt>
-								  <dd class="col-sm-9">${delete_ordine_attr.utente.cognome}</dd>
+								  <dd class="col-sm-9">${show_ordine_attr.utente.cognome}</dd>
 							   	</dl>
 							  </div>
 							<!-- end info Utente -->
 					    	</div>
-					    	
+					    
 					    <!-- end card body -->
+					    </div>
 					    
 					    <div class='card-footer'>
-					    	<form action="ExecuteDeleteOrdineServlet" method="post">
-					    		<input type="hidden" name="idOrdine" value="${delete_ordine_attr.id}">
-						    	<button type="submit" name="submit" id="submit" class="btn btn-danger">Conferma</button>
-						        <a href="ExecuteListOrdineServlet" class='btn btn-outline-secondary' style='width:80px'>
-						            <i class='fa fa-chevron-left'></i> Back
-						        </a>
-					        </form>
+					        <a href="ExecuteListOrdiniApertiServlet" class='btn btn-outline-secondary' style='width:80px'>
+					            <i class='fa fa-chevron-left'></i> Back
+					        </a>
 					    </div>
 					<!-- end card -->
 					</div>	

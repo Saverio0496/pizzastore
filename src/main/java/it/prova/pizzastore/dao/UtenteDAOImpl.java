@@ -83,4 +83,13 @@ public class UtenteDAOImpl implements UtenteDAO {
 		return query.getResultStream().findFirst();
 	}
 
+	@Override
+	public List<Utente> listOnlyFattorini() throws Exception {
+
+		return entityManager
+				.createQuery("select u FROM Utente u join fetch u.ruoli r where r.descrizione = 'Fattorino User'",
+						Utente.class)
+				.getResultList();
+	}
+
 }

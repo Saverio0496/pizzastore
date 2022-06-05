@@ -1,15 +1,10 @@
 package it.prova.pizzastore.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,18 +24,7 @@ public class Pizza {
 	@Column(name = "attivo")
 	private boolean attivo;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "pizze")
-	private Set<Ordine> ordini = new HashSet<Ordine>(0);
-
 	public Pizza() {
-	}
-
-	public Pizza(String descrizione, String ingredienti, Integer prezzoBase, boolean attivo, Set<Ordine> ordini) {
-		this.descrizione = descrizione;
-		this.ingredienti = ingredienti;
-		this.prezzoBase = prezzoBase;
-		this.attivo = attivo;
-		this.ordini = ordini;
 	}
 
 	public Pizza(String descrizione, String ingredienti, Integer prezzoBase, boolean attivo) {
@@ -105,14 +89,6 @@ public class Pizza {
 
 	public void setAttivo(boolean attivo) {
 		this.attivo = attivo;
-	}
-
-	public Set<Ordine> getOrdini() {
-		return ordini;
-	}
-
-	public void setOrdini(Set<Ordine> ordini) {
-		this.ordini = ordini;
 	}
 
 }
