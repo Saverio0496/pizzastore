@@ -97,7 +97,7 @@
 								    </select>
 								</div>
 								
-								<input type="hidden" name="idCliente" value="${clienteInPagina.id}">
+								<input type="hidden" name="idOrdine" value="${update_ordine_attr.id}">
 								
 								
 							<div class="col-12">
