@@ -20,9 +20,9 @@ public class ExecuteSearchOrdineServlet extends HttpServlet {
 
 		String codiceParam = request.getParameter("codice");
 		String dataParam = request.getParameter("data");
-		String utenteParam = request.getParameter("utente.id");
-		String clienteParam = request.getParameter("cliente.id");
-		String[] pizzeParam = request.getParameterValues("pizza.id");
+		String utenteParam = request.getParameter("utente_id");
+		String clienteParam = request.getParameter("cliente_id");
+		String[] pizzeParam = request.getParameterValues("pizza_id");
 
 		Ordine example = new Ordine();
 

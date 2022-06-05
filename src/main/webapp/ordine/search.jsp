@@ -48,14 +48,6 @@
 								    </select>
 								</div>
 								
-								<c:forEach items="${pizza_list_attribute}" var="pizzaItem">
-									<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" value="${pizzaItem.id}"
-											  		 id="pizza_id" name="pizza_id">
-											  <label class="form-check-label" for="pizza_id">${pizzaItem.descrizione}</label>
-									</div>
-								</c:forEach>
-								
 								<div class="col-md-6">
 									<label for="data" class="form-label">Data</label>
 	                        		<input class="form-control" id="data" type="date" placeholder="dd/MM/yy" 
@@ -75,7 +67,18 @@
 								      		<option value="${utenteItem.id}">${utenteItem.nome } ${utenteItem.cognome }</option>
 								      	</c:forEach>
 								    </select>
-								</div>
+								   </div>
+								    
+								    <div class="col-md-6">
+									<label for="pizza_id">Pizze</label><br>
+									<c:forEach items="${pizza_list_attribute}" var="pizzaItem">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="checkbox" value="${pizzaItem.id}"
+												 id="pizza_id" name="pizza_id">
+										<label class="form-check-label" for="pizza_id"> ${pizzaItem.descrizione}</label>
+										</div>
+									</c:forEach>
+								</div><br>
 								
 							<div class="col-12">
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Cerca</button>

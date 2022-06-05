@@ -73,8 +73,7 @@ public class UtilityForm {
 
 		Ordine result = new Ordine(codiceInputParam);
 		if (NumberUtils.isCreatable(clienteInputParam)) {
-			Cliente cliente = new Cliente();
-			cliente.setId(Long.parseLong(clienteInputParam));
+			Cliente cliente = MyServiceFactory.getClienteServiceInstance().caricaSingoloElemento(Long.parseLong(clienteInputParam));
 			result.setCliente(cliente);
 		}
 		Set<Pizza> elencoPizzePerOrdine = new HashSet<Pizza>();
@@ -91,8 +90,7 @@ public class UtilityForm {
 		result.setPizze(elencoPizzePerOrdine);
 		result.setData(parseDateFromString(dataInputParam));
 		if (NumberUtils.isCreatable(utenteInputParam)) {
-			Utente utente = new Utente();
-			utente.setId(Long.parseLong(utenteInputParam));
+			Utente utente = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(utenteInputParam));
 			result.setUtente(utente);
 		}
 		return result;
