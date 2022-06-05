@@ -24,7 +24,8 @@ public class PrepareInsertOrdineServlet extends HttpServlet {
 
 			request.setAttribute("pizza_list_attribute", MyServiceFactory.getPizzaServiceInstance().listAllElements());
 
-			request.setAttribute("utente_list_attribute", MyServiceFactory.getUtenteServiceInstance().listSoloFattorini());
+			request.setAttribute("utente_list_attribute",
+					MyServiceFactory.getUtenteServiceInstance().listSoloFattorini());
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");

@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.prova.pizzastore.dao.OrdineDAO;
 import it.prova.pizzastore.model.Ordine;
+import it.prova.pizzastore.model.Pizza;
 
 public interface OrdineService {
 
@@ -21,9 +22,11 @@ public interface OrdineService {
 	
 	public Ordine caricaSingoloElementoEager(Long id) throws Exception;
 	
-	public void calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception;
+	public Integer calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception;
 	
 	public List<Ordine> listAllOrdiniAperti(Long idFattorino) throws Exception;
+	
+	public void aggiungiPizze(Ordine ordineInstance, Pizza pizzaDaAggiungere) throws Exception;
 
 	// per injection
 	public void setOrdineDAO(OrdineDAO Ordine);

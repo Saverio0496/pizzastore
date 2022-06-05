@@ -1,4 +1,4 @@
-package it.prova.pizzastore.web.servlet.cliente;
+package it.prova.pizzastore.web.servlet.ordine;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -27,7 +27,7 @@ public class PrepareUpdateOrdineServlet extends HttpServlet {
 
 		try {
 			request.setAttribute("update_ordine_attr",
-					MyServiceFactory.getOrdineServiceInstance().caricaSingoloElemento(Long.parseLong(idOrdineParam)));
+					MyServiceFactory.getOrdineServiceInstance().caricaSingoloElementoEager(Long.parseLong(idOrdineParam)));
 			request.setAttribute("cliente_list_attribute",
 					MyServiceFactory.getClienteServiceInstance().listAllElements());
 			

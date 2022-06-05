@@ -2,6 +2,7 @@ package it.prova.pizzastore.utility;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -73,7 +74,8 @@ public class UtilityForm {
 
 		Ordine result = new Ordine(codiceInputParam);
 		if (NumberUtils.isCreatable(clienteInputParam)) {
-			Cliente cliente = MyServiceFactory.getClienteServiceInstance().caricaSingoloElemento(Long.parseLong(clienteInputParam));
+			Cliente cliente = MyServiceFactory.getClienteServiceInstance()
+					.caricaSingoloElemento(Long.parseLong(clienteInputParam));
 			result.setCliente(cliente);
 		}
 		Set<Pizza> elencoPizzePerOrdine = new HashSet<Pizza>();
@@ -90,7 +92,26 @@ public class UtilityForm {
 		result.setPizze(elencoPizzePerOrdine);
 		result.setData(parseDateFromString(dataInputParam));
 		if (NumberUtils.isCreatable(utenteInputParam)) {
-			Utente utente = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(utenteInputParam));
+			Utente utente = MyServiceFactory.getUtenteServiceInstance()
+					.caricaSingoloElemento(Long.parseLong(utenteInputParam));
+			result.setUtente(utente);
+		}
+		return result;
+	}
+
+	public static Ordine createOrdineFromParams(String codiceParam, String dataParam, String clienteParam,
+			String utenteParam) {
+		Ordine result = new Ordine(codiceParam);
+		result.setData(parseDateFromString(dataParam));
+
+		if (NumberUtils.isCreatable(clienteParam)) {
+			Cliente cliente = new Cliente();
+			cliente.setId(Long.parseLong(clienteParam));
+			result.setCliente(cliente);
+		}
+		if (NumberUtils.isCreatable(utenteParam)) {
+			Utente utente = new Utente();
+			utente.setId(Long.parseLong(utenteParam));
 			result.setUtente(utente);
 		}
 		return result;
@@ -111,6 +132,24 @@ public class UtilityForm {
 		} catch (ParseException e) {
 			return null;
 		}
+	}
+
+	public static Ordine setPizzeAdOrdine(Ordine ordineInstance, String[] idPizze) throws Exception {
+		new ArrayList<Pizza>();
+
+		if (idPizze == null || idPizze.length == 0) {
+			ordineInstance.setPizze(null);
+		} else {
+			for (String pizzaItem : idPizze) {
+				if (NumberUtils.isCreatable(pizzaItem)) {
+					Pizza pizzaDaSettare = MyServiceFactory.getPizzaServiceInstance()
+							.caricaSingoloElemento(Long.parseLong(pizzaItem));
+
+					MyServiceFactory.getOrdineServiceInstance().aggiungiPizze(ordineInstance, pizzaDaSettare);
+				}
+			}
+		}
+		return ordineInstance;
 	}
 
 }

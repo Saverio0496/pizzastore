@@ -7,7 +7,7 @@
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="../header.jsp" />
 	   
-	   <title>Inserisci Ordine</title>
+	   <title>Inserisci Nuovo Ordine</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -48,15 +48,6 @@
 	                        				title="formato : gg/mm/aaaa"  name="data" value="${parsedDate}" >
 								</div>
 								
-								
-								<div class="col-md-6"> 
-									<label for="pizza.id">Pizze <span class="text-danger">*</span></label><br>
-								      	<c:forEach items="${pizza_list_attribute }" var="pizzaItem">
-								      		<input type="checkbox" id="pizzaItem" name="pizzaItem" value="">
-											<label for="pizzaItem">${pizzaItem.descrizione }</label><br>
-								      	</c:forEach>
-								</div>
-								
 								<div class="col-md-6"> 
 									<label for="cliente.id">Cliente <span class="text-danger">*</span></label>
 								    <select class="form-select" id="cliente.id" name="cliente.id">
@@ -68,13 +59,28 @@
 								</div>
 								
 								<div class="col-md-6"> 
-									<label for="utente.id">Utente<span class="text-danger">*</span></label>
+									<label for="utente.id">Utente <span class="text-danger">*</span></label>
 								    <select class="form-select" id="utente.id" name="utente.id">
 								    	<option value="" selected> -- Selezionare una voce -- </option>
 								      	<c:forEach items="${utente_list_attribute }" var="utenteItem">
 								      		<option value="${utenteItem.id}" ${insert_ordine_attr.utente.id == utenteItem.id?'selected':''} >${utenteItem.nome } ${utenteItem.cognome }</option>
 								      	</c:forEach>
 								    </select>
+								</div>
+								
+								<div class="col-md-6">
+									<label for="pizze.id">Pizze <span class="text-danger">*</span></label><br>
+									
+									<c:forEach items="${pizza_list_attribute}" var="pizzaItem">
+									<c:if test="${pizzaItem.attivo == true}">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="checkbox" value="${pizzaItem.id}"
+												 id="pizze.id" name="pizze.id">
+										<label class="form-check-label" for="pizze.id"> ${pizzaItem.descrizione}</label>
+										</div>
+										</c:if>
+									</c:forEach>
+									
 								</div>
 								
 								<div class="col-12">

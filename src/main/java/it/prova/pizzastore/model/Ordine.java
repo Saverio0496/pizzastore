@@ -158,5 +158,4 @@ public class Ordine {
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
-
 }

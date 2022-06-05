@@ -68,7 +68,7 @@
 								</div>
 								
 								<div class="col-md-6"> 
-									<label for="utente.id">Fattorino </label>
+									<label for="utente.id">Utente </label>
 								    <select class="form-select" id="utente.id" name="utente.id">
 								    	<option value="" selected> -- Selezionare una voce -- </option>
 								      	<c:forEach items="${utente_list_attribute }" var="utenteItem">

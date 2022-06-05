@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import it.prova.pizzastore.dao.OrdineDAO;
 import it.prova.pizzastore.exceptions.ElementNotFoundException;
 import it.prova.pizzastore.model.Ordine;
+import it.prova.pizzastore.model.Pizza;
 import it.prova.pizzastore.web.listener.LocalEntityManagerFactoryListener;
 
 public class OrdineServiceImpl implements OrdineService {
@@ -141,7 +142,7 @@ public class OrdineServiceImpl implements OrdineService {
 		try {
 			ordineDAO.setEntityManager(entityManager);
 
-			return ordineDAO.findOneEager(id).orElse(null);
+			return ordineDAO.findOneEager(id);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,17 +153,16 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	@Override
-	public void calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception {
+	public Integer calcolaPrezzoOrdine(Ordine ordineInstance) throws Exception {
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
 
+		Integer result = 0;
 		try {
 			entityManager.getTransaction().begin();
 
 			ordineDAO.setEntityManager(entityManager);
 
-			ordineInstance.setCostoTotaleOrdine(ordineDAO.calculateOrderPrice(ordineInstance));
-
-			ordineDAO.update(ordineInstance);
+			result = ordineDAO.calculateOrderPrice(ordineDAO.findOneEager(ordineInstance.getId()));
 
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
@@ -171,7 +171,9 @@ public class OrdineServiceImpl implements OrdineService {
 			throw e;
 		} finally {
 			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+
 		}
+		return result;
 	}
 	
 	@Override
@@ -188,6 +190,31 @@ public class OrdineServiceImpl implements OrdineService {
 			throw e;
 		} finally {
 			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
+
+	public void aggiungiPizze(Ordine ordineInstance, Pizza pizzaDaAggiungere) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			ordineDAO.setEntityManager(entityManager);
+
+			ordineInstance = entityManager.merge(ordineInstance);
+
+			pizzaDaAggiungere = entityManager.merge(pizzaDaAggiungere);
+
+			ordineInstance.getPizze().add(pizzaDaAggiungere);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+
 		}
 	}
 }

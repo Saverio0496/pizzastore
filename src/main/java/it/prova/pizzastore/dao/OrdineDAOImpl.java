@@ -100,17 +100,18 @@ public class OrdineDAOImpl implements OrdineDAO {
 	}
 
 	@Override
-	public Optional<Ordine> findOneEager(Long id) throws Exception {
+	public Ordine findOneEager(Long id) throws Exception {
 		return entityManager.createQuery(
 				"from Ordine o left join fetch o.cliente left join fetch o.utente left join fetch o.pizze where o.id=:idOrdine",
-				Ordine.class).setParameter("idOrdine", id).getResultList().stream().findFirst();
+				Ordine.class).setParameter("idOrdine", id).getResultStream().findFirst().orElse(null);
 	}
 
 	@Override
 	public Integer calculateOrderPrice(Ordine ordineInput) throws Exception {
-		TypedQuery<Long> typedQuery = entityManager.createQuery(
-				"select sum(p.prezzoBase) from Ordine o join o.pizze p where o.codice = :codice", Long.class);
-		return typedQuery.setParameter("codice", ordineInput.getCodice()).getFirstResult();
+		TypedQuery<Long> query = entityManager
+				.createQuery("select sum(p.prezzoBase) from Ordine o join o.pizze p where o.id = :id", Long.class);
+
+		return query.setParameter("id", ordineInput.getId()).getSingleResult().intValue();
 	}
 
 	@Override
