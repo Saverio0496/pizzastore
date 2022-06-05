@@ -34,13 +34,8 @@ public class ExecuteUpdateOrdineServlet extends HttpServlet {
 		String[] pizzeParam = request.getParameterValues("pizze.id");
 
 		Ordine ordineInstance = new Ordine();
-		try {
-			ordineInstance = UtilityForm.createOrdineFromParams(clienteParam, pizzeParam, dataParam, codiceParam,
-					utenteParam);
-		} catch (Exception e1) {
 
-			e1.printStackTrace();
-		}
+		ordineInstance = UtilityForm.createOrdineFromParams(codiceParam, dataParam, clienteParam, utenteParam);
 
 		ordineInstance.setId(Long.parseLong(idOrdineParam));
 
@@ -52,8 +47,16 @@ public class ExecuteUpdateOrdineServlet extends HttpServlet {
 		}
 
 		try {
+			UtilityForm.setPizzeAdOrdine(ordineInstance, pizzeParam);
+			Integer costo = MyServiceFactory.getOrdineServiceInstance().calcolaPrezzoOrdine(ordineInstance);
+			ordineInstance.setCostoTotaleOrdine(Integer.parseInt(costo.toString()));
+
 			MyServiceFactory.getOrdineServiceInstance().aggiorna(ordineInstance);
+
+			request.setAttribute("sommaTotale", costo);
+
 			request.setAttribute("ordine_list_attribute",
+
 					MyServiceFactory.getOrdineServiceInstance().listAllElements());
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
@@ -65,4 +68,5 @@ public class ExecuteUpdateOrdineServlet extends HttpServlet {
 
 		request.getRequestDispatcher("/ordine/list.jsp").forward(request, response);
 	}
+
 }
