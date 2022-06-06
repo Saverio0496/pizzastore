@@ -12,7 +12,7 @@
 	
 	</head>
 	<body>
-		<jsp:include page="/utente/navbarPizzaiolo.jsp"></jsp:include>
+		<jsp:include page="../navbar.jsp"></jsp:include>
 		
 		<main class="flex-shrink-0">
 			  <div class="container">

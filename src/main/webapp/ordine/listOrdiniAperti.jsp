@@ -14,7 +14,7 @@
 	<body class="d-flex flex-column h-100">
 	 
 		<!-- Fixed navbar -->
-		<jsp:include page="/utente/navbarFattorino.jsp"></jsp:include>
+		<jsp:include page="../navbar.jsp"></jsp:include>
 	 
 	
 		<!-- Begin page content -->
@@ -56,8 +56,8 @@
 											<td>${ordineItem.codice }</td>
 											<td>${ordineItem.costoTotaleOrdine }</td>
 											<td>
-												<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaOrdiniAttiviServlet?idOrdine=${ordineItem.id }">Visualizza</a>
-												<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteOrdiniAttiviServlet?idOrdine=${ordineItem.id }">Delete</a>
+												<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaOrdiniApertiServlet?idOrdine=${ordineItem.id }">Visualizza</a>
+												<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteOrdiniApertiServlet?idOrdine=${ordineItem.id }">Delete</a>
 											</td>
 										</tr>
 									</c:forEach>

@@ -9,32 +9,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import it.prova.pizzastore.model.Ordine;
 import it.prova.pizzastore.service.MyServiceFactory;
 
-@WebServlet("/ExecuteVisualizzaOrdiniAttiviServlet")
-public class ExecuteVisualizzaOrdiniAttiviServlet extends HttpServlet {
+@WebServlet("/PrepareDeleteOrdiniApertiServlet")
+public class PrepareDeleteOrdiniApertiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idOrdineParam = request.getParameter("idOrdine");
-
 		if (!NumberUtils.isCreatable(idOrdineParam)) {
 			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("home").forward(request, response);
 			return;
 		}
 
+		Ordine ordineInstance = new Ordine();
+
 		try {
-			request.setAttribute("show_ordine_attr",
-					MyServiceFactory.getOrdineServiceInstance().caricaSingoloElementoEager(Long.parseLong(idOrdineParam)));
+			ordineInstance = MyServiceFactory.getOrdineServiceInstance()
+					.caricaSingoloElementoEager(Long.parseLong(idOrdineParam));
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
-			request.getRequestDispatcher("home").forward(request, response);
-			return;
 		}
 
-		request.getRequestDispatcher("/ordine/showOrdiniAperti.jsp").forward(request, response);
+		request.setAttribute("delete_ordine_attr", ordineInstance);
+		request.getRequestDispatcher("/ordine/deleteOrdiniAperti.jsp").forward(request, response);
 	}
-
 }
